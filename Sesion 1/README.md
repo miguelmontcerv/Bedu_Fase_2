@@ -11,7 +11,7 @@ En este primer postwork tuvimos que aplicar muchos de los conceptos que vimos en
 * Colocamos la cantidad mínima y máxima de goles tanto de visitantes como de locales
 * Aplicamos una función de reporte general 
 
-
+Alumnos 
 * Sofía Cristina Suárez Campos
 * David Garduño Guzmán
 * Andrea Noemi Aguilar Hidalgo
