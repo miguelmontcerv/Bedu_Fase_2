@@ -1,4 +1,5 @@
 #Postwork 2
+setwd("...")
 #1
 setwd("c:/Escomc/bedu_fase_2/Sesion 2")
 sp2018 <- read.csv("SP2018.csv")
@@ -23,12 +24,16 @@ summary(sp2020)
 #3
 library(dplyr)
 
-sp2018_1 <- select(sp2018,Date,HomeTeam,AwayTeam,FTHG, FTAG, FTR)
-sp2019_1 <- select(sp2019,Date,HomeTeam,AwayTeam,FTHG, FTAG, FTR)
-sp2020_1 <- select(sp2020,Date,HomeTeam,AwayTeam,FTHG, FTAG, FTR)
+dir()
+
+listaLSP <- lapply(dir(), read.csv)
+
+listaLSP <- lapply(listaLSP, select, Date, HomeTeam, AwayTeam, FTHG, FTAG, FTR)
+
+head(listaLSP[1]); head(listaLSP[2]); head(listaLSP[3])
 
 #4
-datafr <- rbind(sp2018_1,sp2019_1,sp2020_1)
+dataLSP <- do.call(rbind, listaLSP)
 
-datafr <- mutate(datafr, Date = as.Date(Date, "%d/%m/%y"))
-str(datafr)
+dataLSP <- mutate(dataLSP, Date = as.Date(Date, "%d/%m/%y"))
+str(dataLSP)
