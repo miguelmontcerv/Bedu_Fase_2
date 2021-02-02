@@ -96,7 +96,20 @@ Con esta información se puede determinar cuáles cocientes se pueden suponer co
 
 #### Conclusión
 
-Los cocientes que se pueden suponer como iguales a 1 son aquellos que...
+Los cocientes que se pueden suponer como iguales a 1 son aquellos que mediante el remuestreo de bootstrap, nos daban un valor muy cercando a uno, en promedio una de las tablas que obteniamos era la siguiente: 
+
+         [,1]      [,2]      [,3]      [,4]      [,5]      [,6]     [,7]
+ [1,] 0.9638380 0.9634551 0.8755537 1.8949182 0.7994186 1.5047880 0.000000
+ [2,] 0.9931411 1.0300752 1.0726034 0.8270677 0.9046053 0.5108359 0.000000
+ [3,] 0.9653270 1.0870611 1.0251323 0.5291005 1.0416667 0.8714597 2.469136
+ [4,] 0.8857115 0.9436435 1.1263106 0.9611184 1.2614679 2.3745278 3.363914
+ [5,] 1.4085894 0.8465608 0.7275132 0.0000000 2.5462963 0.0000000 0.000000
+ [6,] 2.1128842 0.3174603 0.5456349 0.0000000 1.9097222 0.0000000 0.000000
+ [7,] 2.0896657 0.0000000 0.0000000 4.9886621 0.0000000 0.0000000 0.000000
+ [8,] 0.0000000 2.8571429 0.0000000 0.0000000 0.0000000 0.0000000 0.000000
+ [9,] 0.0000000 0.0000000 4.9107143 0.0000000 0.0000000 0.0000000 0.000000
+ 
+ Donde las folas hacen referencia a los goles de local, y las columnas a los goles de visitante. NO se puede obtener un promedio de todas las tablas porque al hacer el remuestreo mediante bootstrap, no siempre ibamos a obtener el mismo máximo de goles, por lo que las tablas eran de dimensiones diferentes, pero si pudimos observar un patron en los cocientes de las probabilidades conjuntas de $$\mathbb{P}$$
 
 Si se desea se puede consultar/ descargar el archivo de R de este ejercicio, se encuentra en este mismo repositorio, con el nombre `Sesion04_Postwork.R`.
 
