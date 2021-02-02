@@ -108,7 +108,7 @@ Los cocientes que se pueden suponer como iguales a 1 son aquellos que mediante e
  [7,] 2.0896 0.0000 0.0000 4.9886 0.0000 0.0000 0.000
  [8,] 0.0000 2.8571 0.0000 0.0000 0.0000 0.0000 0.000
  [9,] 0.0000 0.0000 4.9107 0.0000 0.0000 0.0000 0.000
-´´´
+```
  
  Donde las filas hacen referencia a los goles de local, y las columnas a los goles de visitante. No se puede obtener un promedio de todas las tablas porque al hacer el remuestreo mediante bootstrap, no siempre ibamos a obtener el mismo máximo de goles, por lo que las tablas eran de dimensiones diferentes, pero si pudimos observar un patron de independencia en los cocientes de las probabilidades conjuntas de P(X=x, Y=y) para los pares (x, y), donde x<4 & y<3. Casos aislados como el (1, 3) y el (1, 4) tambien presentaban patron, todos manteniendo el cocientes entre 0.9 y 1.1 en todos los remuestreos, por lo que para estos casos consideramos que sería correcto suponer independencia.
 
