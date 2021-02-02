@@ -112,7 +112,7 @@ Los cocientes que se pueden suponer como iguales a 1 son aquellos que mediante e
  
  Donde las filas hacen referencia a los goles de local, y las columnas a los goles de visitante. No se puede obtener un promedio de todas las tablas porque al hacer el remuestreo mediante bootstrap, no siempre ibamos a obtener el mismo máximo de goles, por lo que las tablas eran de dimensiones diferentes, pero si pudimos observar un patron de independencia en los cocientes de las probabilidades conjuntas de P(X=x, Y=y) para los pares (x, y), donde x<4 & y<3. Casos aislados como el (1, 3) y el (1, 4) tambien presentaban patron, todos manteniendo el cocientes entre 0.9 y 1.1 en todos los remuestreos, por lo que para estos casos consideramos que sería correcto suponer independencia.
 
-Si se desea se puede consultar/ descargar el archivo de R de este ejercicio, se encuentra en este mismo repositorio, con el nombre `Sesion04_Postwork.R`.
+Si se desea se puede consultar/ descargar el archivo de R de este ejercicio, se encuentra en este mismo repositorio, con el nombre `Postwork.R`.
 
 Alumnos 
 * Sofía Cristina Suárez Campos
