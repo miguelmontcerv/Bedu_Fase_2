@@ -29,21 +29,29 @@ B <- matrix(Goles_Visitante)
 AB <- A %*% t(B)
 C <-matrix(Goles_Conjunta, 9, 7)
 cocientes <- C/AB
-
-
-
-
-
-
+(cocientes)
 
 # Inciso 2 ----
 
 set.seed(01012021)
-muestreo <- function(datos, n){
-  for (i in 1:n){
-    muestra <- sample(datos, 1000, replace = T)
-  }
-}
-a <- sample(datafr, size = 10, replace = T)
+muestreo <- sample(nrow(datafr), size = 1140, replace = TRUE)
+muestreo_1 <- datafr[muestreo, ]
+
+Goles_Casa_1 <- table(muestreo_1$FTHG)/nrow(datafr)
+(Goles_Casa_1)
+
+Goles_Visitante_1 <- table(muestreo_1$FTAG)/nrow(datafr)
+(Goles_Visitante_1)
+
+Goles_Conjunta_1 <-  table(muestreo_1$FTHG, muestreo_1$FTAG)/nrow(datafr)
+(Goles_Conjunta_1)
+
+A1 <- matrix(Goles_Casa_1)
+B1 <- matrix(Goles_Visitante_1)
+AB1 <- A1 %*% t(B1)
+C1 <-matrix(Goles_Conjunta_1, 9, 7)
+cocientes_bootstrap <- C1/AB1
+(cocientes_bootstrap)
+
 
 
