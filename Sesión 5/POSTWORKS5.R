@@ -1,10 +1,6 @@
-setwd("D:/BEDU/PROGRAMACI”N Y ESTADÕSTICA CON R/SESI”N 5/POSTWORK/")
+setwd("D:/BEDU/PROGRAMACI√ìN Y ESTAD√çSTICA CON R/SESI√ìN 5/POSTWORK/")
 
 # 1
-
-ligaEsp1718 <- read.csv("LIGA ESPA—OLA 2017-2018.csv")
-ligaEsp1819 <- read.csv("LIGA ESPA—OLA 2018-2019.csv")
-ligaEsp1920 <- read.csv("LIGA ESPA—OLA 2019-2020.csv")
 
 library(dplyr)
 
@@ -22,10 +18,10 @@ SmallData <- rename(SmallData, date = Date, home.team = HomeTeam,
                home.score = FTHG, away.team = AwayTeam, 
                away.score = FTAG)
 
-write.csv(SmallData, "D:/BEDU/PROGRAMACI”N Y ESTADÕSTICA CON R/SESI”N 5/PW/soccer.csv", 
+write.csv(SmallData, "D:/BEDU/PROGRAMACI√ìN Y ESTAD√çSTICA CON R/SESI√ìN 5/PW/soccer.csv", 
           row.names = FALSE)
 
-setwd("D:/BEDU/PROGRAMACI”N Y ESTADÕSTICA CON R/SESI”N 5/PW/")
+setwd("D:/BEDU/PROGRAMACI√ìN Y ESTAD√çSTICA CON R/SESI√ìN 5/PW/")
 
 listasoccer <- create.fbRanks.dataframes(
   scores.file = "soccer.csv")
@@ -47,4 +43,3 @@ ranking <- rank.teams(anotaciones, teams = equipos,
 
 predict(ranking, date = fecha[n])
 
-SmallData[SmallData$date == fecha[n],]
