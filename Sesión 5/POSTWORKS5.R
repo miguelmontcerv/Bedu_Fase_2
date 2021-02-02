@@ -23,6 +23,8 @@ write.csv(SmallData, "D:/BEDU/PROGRAMACIÓN Y ESTADÍSTICA CON R/SESIÓN 5/PW/so
 
 setwd("D:/BEDU/PROGRAMACIÓN Y ESTADÍSTICA CON R/SESIÓN 5/PW/")
 
+library(fbRanks)
+
 listasoccer <- create.fbRanks.dataframes(
   scores.file = "soccer.csv")
 
