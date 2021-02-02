@@ -1,0 +1,49 @@
+# Inciso 1 ----
+
+library(dplyr)
+library(ggplot2)
+library(tidyverse)
+library(rsample)
+
+sp2018 <- read.csv("SP2018.csv")
+sp2019 <- read.csv("SP2019.csv")
+sp2020 <- read.csv("SP2020.csv")
+
+sp2018_1 <- select(sp2018,Date,HomeTeam,AwayTeam,FTHG, FTAG, FTR)
+sp2019_1 <- select(sp2019,Date,HomeTeam,AwayTeam,FTHG, FTAG, FTR)
+sp2020_1 <- select(sp2020,Date,HomeTeam,AwayTeam,FTHG, FTAG, FTR)
+
+datafr <- rbind(sp2018_1,sp2019_1,sp2020_1)
+
+Goles_Casa <- table(datafr$FTHG)/nrow(datafr)
+(Goles_Casa)
+
+Goles_Visitante <- table(datafr$FTAG)/nrow(datafr)
+(Goles_Visitante)
+
+Goles_Conjunta <-  table(datafr$FTHG, datafr$FTAG)/nrow(datafr)
+(Goles_Conjunta)
+
+A <- matrix(Goles_Casa)
+B <- matrix(Goles_Visitante)
+AB <- A %*% t(B)
+C <-matrix(Goles_Conjunta, 9, 7)
+cocientes <- C/AB
+
+
+
+
+
+
+
+# Inciso 2 ----
+
+set.seed(01012021)
+muestreo <- function(datos, n){
+  for (i in 1:n){
+    muestra <- sample(datos, 1000, replace = T)
+  }
+}
+a <- sample(datafr, size = 10, replace = T)
+
+
