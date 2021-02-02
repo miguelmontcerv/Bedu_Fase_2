@@ -63,6 +63,8 @@
 
 `str(dataLSP)`
 
+Si se desea se puede consultar/ descargar el archivo de R de este ejercicio, se encuentra en este mismo repositorio, con el nombre `Postwork.R`.
+
 Alumnos 
 * Sofía Cristina Suárez Campos
 * David Garduño Guzmán
