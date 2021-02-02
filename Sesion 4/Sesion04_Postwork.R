@@ -49,7 +49,7 @@ Goles_Conjunta_1 <-  table(muestreo_1$FTHG, muestreo_1$FTAG)/nrow(datafr)
 A1 <- matrix(Goles_Casa_1)
 B1 <- matrix(Goles_Visitante_1)
 AB1 <- A1 %*% t(B1)
-C1 <-matrix(Goles_Conjunta_1, 9, 7)
+C1 <-matrix(Goles_Conjunta_1, 8, 7)
 cocientes_bootstrap <- C1/AB1
 (cocientes_bootstrap)
 
