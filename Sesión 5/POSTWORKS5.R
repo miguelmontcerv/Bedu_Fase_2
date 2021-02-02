@@ -21,6 +21,8 @@ SmallData <- rename(SmallData, date = Date, home.team = HomeTeam,
 write.csv(SmallData, "D:/BEDU/PROGRAMACIÓN Y ESTADÍSTICA CON R/SESIÓN 5/PW/soccer.csv", 
           row.names = FALSE)
 
+# 2
+
 setwd("D:/BEDU/PROGRAMACIÓN Y ESTADÍSTICA CON R/SESIÓN 5/PW/")
 
 library(fbRanks)
@@ -34,10 +36,14 @@ equipos <- listasoccer$teams
 head(listasoccer$scores)
 head(listasoccer$teams)
 
+# 3
+
 fecha <- unique(SmallData$date)
 fecha <- as.Date(fecha, "%d/%m/%Y")
 fecha <- sort(fecha)
 n <- length(fecha)
+
+# 4
 
 ranking <- rank.teams(anotaciones, teams = equipos, 
                       max.date = fecha[n-1], min.date = fecha[1], 
