@@ -55,7 +55,7 @@
 
 `head(listaLSP[1]); head(listaLSP[2]); head(listaLSP[3])`
 
-4. Por último, se guardaron los datos selecciónados anteriormente en un solo data frame y se comprobó que todos los datos fueran del mismo tipo. Sólo hubo un detalle con el frommato de la fecha, el cual se estandarizó para que todos tuvieran el mismo.
+4. Por último, se guardaron los datos selecciónados anteriormente en un solo data frame y se comprobó que todos los datos fueran del mismo tipo. Sólo hubo un detalle con el formato de la fecha, el cual se estandarizó para que todos tuvieran el mismo.
 
 `dataLSP <- do.call(rbind, listaLSP)`
 
