@@ -34,21 +34,28 @@ cocientes <- C/AB
 # Inciso 2 ----
 
 set.seed(01012021)
-muestreo <- sample(nrow(datafr), size = 1140, replace = TRUE)
-muestreo_1 <- datafr[muestreo, ]
 
-Goles_Casa_1 <- table(muestreo_1$FTHG)/nrow(datafr)
-(Goles_Casa_1)
+fboots <- function(tabla, tam_muestra){
 
-Goles_Visitante_1 <- table(muestreo_1$FTAG)/nrow(datafr)
-(Goles_Visitante_1)
+#tabla <- datafr
+#tam_muestra <- 1140
+muestreo <- sample(nrow(tabla), size = tam_muestra, replace = TRUE)
+muestreo_1 <- tabla[muestreo, ]
 
-Goles_Conjunta_1 <-  table(muestreo_1$FTHG, muestreo_1$FTAG)/nrow(datafr)
-(Goles_Conjunta_1)
+Goles_Casa_1 <- table(muestreo_1$FTHG)/nrow(muestreo_1)
+
+Goles_Visitante_1 <- table(muestreo_1$FTAG)/nrow(muestreo_1)
+
+Goles_Conjunta_1 <-  table(muestreo_1$FTHG, muestreo_1$FTAG)/nrow(muestreo_1)
 
 A1 <- matrix(Goles_Casa_1)
 B1 <- matrix(Goles_Visitante_1)
 AB1 <- A1 %*% t(B1)
-C1 <-matrix(Goles_Conjunta_1, 9, 7)
+C1 <-matrix(Goles_Conjunta_1, max(muestreo_1$FTHG)+1 , max(muestreo_1$FTAG)+1)
 cocientes_bootstrap <- C1/AB1
-(cocientes_bootstrap)
+cocientes_bootstrap
+return(cocientes_bootstrap)
+
+}
+
+replicate(2, fboots(datafr, 1140), simplify = "array")
