@@ -1,8 +1,10 @@
+# Postwork Sesión 5
+
 ## Contenido
 1. [Desarrollo](#desarrollo)
 2. [Resultados](#resultados)
 
-## DESARROLLO
+### Desarrollo
 
 1. A partir del conjunto de datos de soccer de la liga española de las temporadas 2017/2018, 2018/2019 y 2019/2020, crea el data frame SmallData, que contenga las columnas date, home.team, home.score, away.team y away.score; esto lo puede hacer con ayuda de la función select del paquete dplyr. Luego establece un directorio de trabajo y con ayuda de la función write.csv guarda el data frame como un archivo csv con nombre soccer.csv. Puedes colocar como argumento row.names = FALSE en write.csv.
 
@@ -12,7 +14,7 @@
 
 4. Finalmente estima las probabilidades de los eventos, el equipo de casa gana, el equipo visitante gana o el resultado es un empate para los partidos que se jugaron en la última fecha del vector de fechas fecha. Esto lo puedes hacer con ayuda de la función predict y usando como argumentos ranking y fecha[n] que deberá especificar en date.
 
-## Resultados
+### Resultados
 
 Primero, establecemos el directorio de trabajo que deberá contener los achivos de las temporadas 2017/2018, 2018/2019, 2019/2020.
 ```R
