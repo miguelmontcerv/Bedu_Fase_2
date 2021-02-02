@@ -166,3 +166,9 @@ Model based on data from 18/08/2017 to 22/12/2020
 23/12/2020 Valencia vs Huesca, HW 57%, AW 20%, T 23%, pred score 1.8-1  actual: HW (2-1)
 23/12/2020 Vallecano vs Levante, HW 26%, AW 51%, T 23%, pred score 1.3-1.9  actual: HW (2-1)
 ```
+Presentado por: 
+
+* Sofía Cristina Suárez Campos
+* David Garduño Guzmán
+* Andrea Noemi Aguilar Hidalgo
+* Miguel Angel Monteros Cervantes
