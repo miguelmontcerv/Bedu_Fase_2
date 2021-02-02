@@ -1,4 +1,4 @@
-# Sesion 2. Manipulación de datos en R: Postwork
+# Sesion 2. Manipulación de datos en R: Solución de Postwork
 ## Data Science
 ### Fase 2
 
