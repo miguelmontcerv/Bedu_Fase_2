@@ -91,3 +91,10 @@ match.data <- read.csv("match.data.csv") # LEEMOS EL DATAFRAME
 ```
 
 ![image](www/POSTWORK.png)
+
+Presentado por: 
+
+* Sofía Cristina Suárez Campos
+* David Garduño Guzmán
+* Andrea Noemi Aguilar Hidalgo
+* Miguel Angel Monteros Cervantes
