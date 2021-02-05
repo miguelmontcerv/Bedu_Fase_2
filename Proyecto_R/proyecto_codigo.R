@@ -127,7 +127,7 @@ grafica <- ggplot(cdmx, aes(x = desc_municipio, y = X2020, fill = factor(desc_mu
   )
 grafica
 
-# Predicciones: Divorcios con relación alos matrimonios
+# Predicciones
 
 divormx <- datos %>% 
   filter(indicador %in% c("Matrimonios", "Divorcios",
@@ -136,7 +136,7 @@ divormx <- datos %>%
                           "Divorcios administrativos")) %>% 
   filter(desc_entidad == "Estados Unidos Mexicanos")
 
-divorcios <- datos %>% 
+datos2 <- datos %>% 
   filter(indicador %in% c("Matrimonios", "Divorcios",
                           "Relación divorcios - matrimonios", 
                           "Divorcios judiciales", 
@@ -149,10 +149,30 @@ divormx <- divormx %>%
 divormx <- divormx %>% 
   select(-c("indicador", "unidad_medida", "X2020"))
 
-divorcios <- divorcios %>% 
+divorcios <- datos2 %>% 
   select(-c("cve_entidad", "cve_municipio", "id_indicador")) %>% 
-  filter(desc_municipio != "No especificado") %>% 
+  filter(desc_municipio != "No especificado", indicador == "Divorcios") %>% 
   filter(desc_municipio == "Estatal")
+
+matrimonios <- datos2 %>% 
+  select(-c("cve_entidad", "cve_municipio", "id_indicador")) %>% 
+  filter(desc_municipio != "No especificado", indicador == "Matrimonios") %>% 
+  filter(desc_municipio == "Estatal")
+
+# Divorcios y matrimonios por entidad
+
+divorcios_final <- divorcios %>% 
+  select(c("desc_entidad", "X2017", "X2018", "X2019")) %>% 
+  rename("Entidad" = desc_entidad) %>% 
+  mutate(X2017 = as.numeric(X2017), X2018 = as.numeric(X2018), X2019 = as.numeric(X2019)) %>% 
+  arrange(desc(X2019), desc(X2018), desc(X2017))  
+
+matrimonios_final <- matrimonios %>% 
+  select(c("desc_entidad", "X2017", "X2018", "X2019")) %>% 
+  rename("Entidad" = desc_entidad) %>% 
+  mutate(X2017 = as.numeric(X2017), X2018 = as.numeric(X2018), X2019 = as.numeric(X2019)) %>% 
+  arrange(desc(X2019), desc(X2018), desc(X2017))
+
 
 divorcios_mx <- data.frame(t(divormx))
 colnames(divorcios_mx) <- c("Matrimonios",
@@ -215,10 +235,15 @@ round(confint(modelo2, level = 0.95), 2)
 conf2 <- predict(modelo2, interval = "confidence", level = 0.95)
 pred2 <- predict(modelo2, interval = "prediction", level = 0.95)
 
-lines(1994:2019, pred2[, 2], lty = 2, lwd = 2, col = "red") 
-lines(1994:2019, pred2[, 3], lty = 2, lwd = 2, col = "red") 
+lines(1994:2019, pred2[, 2], lty = 2, lwd = 2, col = "red") # límites inferiores
+lines(1994:2019, pred2[, 3], lty = 2, lwd = 2, col = "red") # límites superiores
 
-lines(1994:2019, conf2[, 2], lty = 2, lwd = 2, col = "green") 
+lines(1994:2019, conf2[, 2], lty = 2, lwd = 2, col = "green") # límites inferiores
 lines(1994:2019, conf2[, 3], lty = 2, lwd = 2, col = "green")
+
+## Divorcios judiciales
+
+modelo3 <- lm()
+
 
 
