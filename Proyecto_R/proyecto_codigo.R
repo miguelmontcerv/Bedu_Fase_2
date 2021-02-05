@@ -11,7 +11,7 @@
   str(datos)
   
   #Seleccionamos el senso donde unicamente se consideraron a los solteros
-  solteros <- filter(datos, indicador == "Porcentaje de la poblaci髇 de 12 a駉s y m醩 soltera")
+  solteros <- filter(datos, indicador == "Porcentaje de la poblaci贸n de 12 a帽os y m谩s soltera")
   
   #Limpiamos los datos de las columnas inecesarias
   solteros <- select(solteros,-X1994)
@@ -20,7 +20,7 @@
   solteros <- select(solteros,-X2011:-X2014,-X2016:-X2019)
   solteros <- select(solteros,-unidad_medida)
 
-#Guardamos solo los datos en M閤ico
+#Guardamos solo los datos en M茅xico
   datos_mexico <- filter(datos, desc_municipio == "Estados Unidos Mexicanos")
   datos_mexico <- datos_mexico[10:16,]
   datos_mexico <- select(datos_mexico,-X1994:-X2014,-X2016:-X2019)
@@ -34,7 +34,7 @@ solteros <- solteros[!(solteros$desc_entidad == 'Estados Unidos Mexicanos'),]
 ggplot(data=solteros_en_mexico, aes(x=X2015, y="X2015")) + geom_bar(stat="identity")
 
 #Seleccionamos a los solteros de la CDMX
-solteros_CDMX <- solteros[!(solteros$desc_entidad != 'Ciudad de M閤ico'),]
+solteros_CDMX <- solteros[!(solteros$desc_entidad != 'Ciudad de M茅xico'),]
 
 #Ajuste de tipo de dato
 solteros <- mutate(solteros,X2015 = as.numeric(X2015))
@@ -103,17 +103,17 @@ ggplot(
 #Continuamos con los otros estados
 cdmx <- solteros %>% 
   select(cve_municipio, desc_entidad, desc_municipio, X2020) %>% 
-  filter(cve_municipio != 0, desc_entidad == "Ciudad de M閤ico") %>% 
+  filter(cve_municipio != 0, desc_entidad == "Ciudad de M茅xico") %>% 
   arrange(desc(X2020))
 
 edomex <- solteros %>% 
   select(cve_municipio, desc_entidad, desc_municipio, X2020) %>% 
-  filter(cve_municipio != 0, desc_entidad == "M閤ico") %>% 
+  filter(cve_municipio != 0, desc_entidad == "M茅xico") %>% 
   arrange(desc(X2020))
 
 mich <- solteros %>% 
   select(cve_municipio, desc_entidad, desc_municipio, X2020) %>% 
-  filter(cve_municipio != 0, desc_entidad == "Michoac醤 de Ocampo") %>% 
+  filter(cve_municipio != 0, desc_entidad == "Michoac谩n de Ocampo") %>% 
   arrange(desc(X2020))
 
 #Graficamos cada estado
@@ -126,3 +126,99 @@ grafica <- ggplot(cdmx, aes(x = desc_municipio, y = X2020, fill = factor(desc_mu
     fill = " Entidades"
   )
 grafica
+
+# Predicciones: Divorcios con relaci贸n alos matrimonios
+
+divormx <- datos %>% 
+  filter(indicador %in% c("Matrimonios", "Divorcios",
+                          "Relaci贸n divorcios - matrimonios", 
+                          "Divorcios judiciales", 
+                          "Divorcios administrativos")) %>% 
+  filter(desc_entidad == "Estados Unidos Mexicanos")
+
+divorcios <- datos %>% 
+  filter(indicador %in% c("Matrimonios", "Divorcios",
+                          "Relaci贸n divorcios - matrimonios", 
+                          "Divorcios judiciales", 
+                          "Divorcios administrativos")) %>% 
+  filter(desc_entidad != "Estados Unidos Mexicanos")
+
+divormx <- divormx %>% 
+  select(-c("cve_entidad", "cve_municipio", "desc_municipio", 
+            "desc_entidad", "id_indicador"))
+divormx <- divormx %>% 
+  select(-c("indicador", "unidad_medida", "X2020"))
+
+divorcios <- divorcios %>% 
+  select(-c("cve_entidad", "cve_municipio", "id_indicador")) %>% 
+  filter(desc_municipio != "No especificado") %>% 
+  filter(desc_municipio == "Estatal")
+
+divorcios_mx <- data.frame(t(divormx))
+colnames(divorcios_mx) <- c("Matrimonios",
+                            "Divorcios",
+                            "Relaci贸n_divorcios_matrimonios",
+                            "Divorcios_judiciales",
+                            "Divorcios_administrativos")
+rownames(divorcios_mx) <- 1994:2019
+divorcios_mx <- divorcios_mx %>% 
+  mutate(
+    Matrimonios = as.numeric(Matrimonios),
+    Divorcios= as.numeric(Divorcios),
+    Relaci贸n_divorcios_matrimonios = as.numeric(Relaci贸n_divorcios_matrimonios),
+    Divorcios_judiciales = as.numeric(Divorcios_judiciales),
+    Divorcios_administrativos = as.numeric(Divorcios_administrativos)
+  )
+
+
+attach(divorcios_mx)
+modelo1 <- lm(Divorcios~Matrimonios)
+summary(modelo1)
+
+plot(Matrimonios, Divorcios, pch = 16)
+abline(lsfit(Matrimonios, Divorcios)) 
+mtext(expression(paste('Regresi贸n lineal estimada:',
+                       ' ',
+                       hat(y)[i] == 389300 - 0.5044*x[i] + e[i])),
+      side = 3, adj=1, font = 2)
+
+# Encontramos intervalos de confianza del 95% para el intercepto y la pendiente del modelo de regresi贸n lineal simple
+round(confint(modelo1, level = 0.95), 2)
+
+conf <- predict(modelo1, interval = "confidence", level = 0.95)
+pred <- predict(modelo1, interval = "prediction", level = 0.95)
+
+lines(Matrimonios, pred[, 2], lty = 2, lwd = 2, col = "blue") # l铆mites inferiores
+lines(Matrimonios, pred[, 3], lty = 2, lwd = 2, col = "blue") # l铆mites superiores
+
+lines(Matrimonios, conf[, 2], lty = 2, lwd = 2, col = "green") # l铆mites inferiores
+lines(Matrimonios, conf[, 3], lty = 2, lwd = 2, col = "green") # l铆mites superiores
+
+
+
+# Probabilidad de divorcio
+
+modelo2 <- lm(Relaci贸n_divorcios_matrimonios~c(1994:2019))
+summary(modelo2)
+plot(1994:2019, Relaci贸n_divorcios_matrimonios, pch = 16, 
+     xlab = "A帽os", 
+     ylab = "Divorcios por cada 100 matrimonios")
+abline(lsfit(1994:2019, Relaci贸n_divorcios_matrimonios)) 
+mtext(expression(paste('Regresi贸n lineal estimada:',
+                       ' ',
+                       hat(y)[i] == -1978.1085 + 0.9930*x[i] + e[i])),
+      side = 3, adj=1, font = 2)
+
+# Encontramos intervalos de confianza del 95% para el intercepto y la pendiente del modelo de regresi贸n lineal simple
+round(confint(modelo2, level = 0.95), 2)
+
+conf2 <- predict(modelo2, interval = "confidence", level = 0.95)
+pred2 <- predict(modelo2, interval = "prediction", level = 0.95)
+
+lines(1994:2019, pred2[, 2], lty = 2, lwd = 2, col = "red") 
+lines(1994:2019, pred2[, 3], lty = 2, lwd = 2, col = "red") 
+
+lines(1994:2019, conf2[, 2], lty = 2, lwd = 2, col = "green") 
+lines(1994:2019, conf2[, 3], lty = 2, lwd = 2, col = "green")
+
+
