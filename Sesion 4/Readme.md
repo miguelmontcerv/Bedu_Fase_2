@@ -96,9 +96,23 @@ Con esta información se puede determinar cuáles cocientes se pueden suponer co
 
 #### Conclusión
 
-Los cocientes que se pueden suponer como iguales a 1 son aquellos que...
+Los cocientes que se pueden suponer como iguales a 1 son aquellos que mediante el remuestreo de bootstrap, nos daban un valor muy cercando a uno, en promedio una de las tablas que obteniamos era la siguiente: 
+```R
+       [,1]   [,2]   [,3]   [,4]   [,5]   [,6]  [,7]
+ [1,] 0.9638 0.9634 0.8755 1.8949 0.7994 1.5047 0.000
+ [2,] 0.9931 1.0300 1.0726 0.8270 0.9046 0.5108 0.000
+ [3,] 0.9653 1.0870 1.0251 0.5291 1.0416 0.8714 2.469
+ [4,] 0.8857 0.9436 1.1263 0.9611 1.2614 2.3745 3.363
+ [5,] 1.4085 0.8465 0.7275 0.0000 2.5462 0.0000 0.000
+ [6,] 2.1128 0.3174 0.5459 0.0000 1.9097 0.0000 0.000
+ [7,] 2.0896 0.0000 0.0000 4.9886 0.0000 0.0000 0.000
+ [8,] 0.0000 2.8571 0.0000 0.0000 0.0000 0.0000 0.000
+ [9,] 0.0000 0.0000 4.9107 0.0000 0.0000 0.0000 0.000
+```
+ 
+ Donde las filas hacen referencia a los goles de local, y las columnas a los goles de visitante. No se puede obtener un promedio de todas las tablas porque al hacer el remuestreo mediante bootstrap, no siempre ibamos a obtener el mismo máximo de goles, por lo que las tablas eran de dimensiones diferentes, pero si pudimos observar un patron de independencia en los cocientes de las probabilidades conjuntas de P(X=x, Y=y) para los pares (x, y), donde x<4 & y<3. Casos aislados como el (1, 3) y el (1, 4) tambien presentaban patron, todos manteniendo el cocientes entre 0.9 y 1.1 en todos los remuestreos, por lo que para estos casos consideramos que sería correcto suponer independencia.
 
-Si se desea se puede consultar/ descargar el archivo de R de este ejercicio, se encuentra en este mismo repositorio, con el nombre `Sesion04_Postwork.R`.
+Si se desea se puede consultar/ descargar el archivo de R de este ejercicio, se encuentra en este mismo repositorio, con el nombre `Postwork.R`.
 
 Alumnos 
 * Sofía Cristina Suárez Campos
