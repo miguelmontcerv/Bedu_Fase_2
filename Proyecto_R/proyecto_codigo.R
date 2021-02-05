@@ -46,5 +46,83 @@ media <- solteros %>%
   group_by(desc_entidad) %>% 
   summarise(media2015 = mean(X2015, na.rm = T), media2020 = mean(X2020))
 
+#Calculamos las medias de cada estado y graficamos
+m15 <- media %>% 
+  arrange(desc(media2015))
 
-str(solteros)
+m20 <- media %>% 
+  arrange(desc(media2020))
+
+ggplot(
+  data = m15,
+  mapping = aes(
+    x = desc_entidad,
+    y = media2015, 
+    fill = factor(desc_entidad)
+  )
+) + geom_bar(stat = "identity") +
+  coord_flip()
+
+grafica <- ggplot(m20, aes(x = desc_entidad, y = media2020, fill = factor(desc_entidad)))+
+  geom_bar(stat = "identity")+ coord_flip() +
+  labs(
+    title = "Tabla de Procentajes de Solteros",
+    x = " Estado",
+    y = " Porcentaje de Solteros ",
+    fill = " Porcentaje"
+  )
+grafica
+
+#Seleccionamos unicamente el top 5
+
+bajos <- m15[28:32,]
+
+m15 <- m15[1:5,]
+m20 <- m20[1:5,]
+
+ggplot(
+  data = m15,
+  mapping = aes(
+    x = desc_entidad,
+    y = media2015, 
+    fill = factor(desc_entidad)
+  )
+) + geom_bar(stat = "identity") +
+  coord_flip()
+
+ggplot(
+  data = m20,
+  mapping = aes(
+    x = desc_entidad,
+    y = media2015, 
+    fill = factor(desc_entidad)
+  )
+) + geom_bar(stat = "identity") +
+  coord_flip()
+
+#Continuamos con los otros estados
+cdmx <- solteros %>% 
+  select(cve_municipio, desc_entidad, desc_municipio, X2020) %>% 
+  filter(cve_municipio != 0, desc_entidad == "Ciudad de México") %>% 
+  arrange(desc(X2020))
+
+edomex <- solteros %>% 
+  select(cve_municipio, desc_entidad, desc_municipio, X2020) %>% 
+  filter(cve_municipio != 0, desc_entidad == "México") %>% 
+  arrange(desc(X2020))
+
+mich <- solteros %>% 
+  select(cve_municipio, desc_entidad, desc_municipio, X2020) %>% 
+  filter(cve_municipio != 0, desc_entidad == "Michoacán de Ocampo") %>% 
+  arrange(desc(X2020))
+
+#Graficamos cada estado
+grafica <- ggplot(cdmx, aes(x = desc_municipio, y = X2020, fill = factor(desc_municipio)))+
+  geom_bar(stat = "identity")+ coord_flip() +
+  labs(
+    title = "Tabla de Procentajes de Solteros",
+    x = " Municipio",
+    y = " Porcentaje de Solteros ",
+    fill = " Entidades"
+  )
+grafica
