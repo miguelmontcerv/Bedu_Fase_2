@@ -35,3 +35,16 @@ ggplot(data=solteros_en_mexico, aes(x=X2015, y="X2015")) + geom_bar(stat="identi
 
 #Seleccionamos a los solteros de la CDMX
 solteros_CDMX <- solteros[!(solteros$desc_entidad != 'Ciudad de México'),]
+
+#Ajuste de tipo de dato
+solteros <- mutate(solteros,X2015 = as.numeric(X2015))
+solteros <- mutate(solteros,X2020 = as.numeric(X2020))
+
+#Al tener un NA en un valor de la columna 2015, utilizaremos la tasa de crecimiento con respecto al 2020 y 
+media <- solteros %>% 
+  filter(cve_municipio != 0) %>% 
+  group_by(desc_entidad) %>% 
+  summarise(media2015 = mean(X2015, na.rm = T), media2020 = mean(X2020))
+
+
+str(solteros)
