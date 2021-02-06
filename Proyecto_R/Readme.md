@@ -35,7 +35,6 @@ En este apartado se muestra y explica el código desarrollado.
   ```R
   datos <- data.frame(excel_format)
   ```
-
 4. Se verifica su estructura.
   ```R
   str(datos)
@@ -138,151 +137,157 @@ En este apartado se muestra y explica el código desarrollado.
   ) + geom_bar(stat = "identity") +
     coord_flip()
    ```
+15. Continuamos con los estados.
+  ```R
+  cdmx <- solteros %>% 
+    select(cve_municipio, desc_entidad, desc_municipio, X2020) %>% 
+    filter(cve_municipio != 0, desc_entidad == "Ciudad de México") %>% 
+    arrange(desc(X2020))
 
-#Continuamos con los otros estados
-cdmx <- solteros %>% 
-  select(cve_municipio, desc_entidad, desc_municipio, X2020) %>% 
-  filter(cve_municipio != 0, desc_entidad == "Ciudad de México") %>% 
-  arrange(desc(X2020))
+  edomex <- solteros %>% 
+    select(cve_municipio, desc_entidad, desc_municipio, X2020) %>% 
+    filter(cve_municipio != 0, desc_entidad == "México") %>% 
+    arrange(desc(X2020))
 
-edomex <- solteros %>% 
-  select(cve_municipio, desc_entidad, desc_municipio, X2020) %>% 
-  filter(cve_municipio != 0, desc_entidad == "México") %>% 
-  arrange(desc(X2020))
+  mich <- solteros %>% 
+    select(cve_municipio, desc_entidad, desc_municipio, X2020) %>% 
+    filter(cve_municipio != 0, desc_entidad == "Michoacán de Ocampo") %>% 
+    arrange(desc(X2020))
+  ```
+16. Se grafica cada estado.
+  ```R
+  grafica <- ggplot(cdmx, aes(x = desc_municipio, y = X2020, fill = factor(desc_municipio)))+
+    geom_bar(stat = "identity")+ coord_flip() +
+    labs(
+      title = "Tabla de Procentajes de Solteros",
+      x = " Municipio",
+      y = " Porcentaje de Solteros ",
+      fill = " Entidades"
+    )
+  grafica
+  ```
 
-mich <- solteros %>% 
-  select(cve_municipio, desc_entidad, desc_municipio, X2020) %>% 
-  filter(cve_municipio != 0, desc_entidad == "Michoacán de Ocampo") %>% 
-  arrange(desc(X2020))
+##### Predicciones
 
-#Graficamos cada estado
-grafica <- ggplot(cdmx, aes(x = desc_municipio, y = X2020, fill = factor(desc_municipio)))+
-  geom_bar(stat = "identity")+ coord_flip() +
-  labs(
-    title = "Tabla de Procentajes de Solteros",
-    x = " Municipio",
-    y = " Porcentaje de Solteros ",
-    fill = " Entidades"
-  )
-grafica
+17. Se seleccionan y filtran los datos a procesar.
+  ```R
+  divormx <- datos %>% 
+    filter(indicador %in% c("Matrimonios", "Divorcios",
+                            "Relación divorcios - matrimonios", 
+                            "Divorcios judiciales", 
+                            "Divorcios administrativos")) %>% 
+    filter(desc_entidad == "Estados Unidos Mexicanos")
 
-# Predicciones
+  datos2 <- datos %>% 
+    filter(indicador %in% c("Matrimonios", "Divorcios",
+                            "Relación divorcios - matrimonios", 
+                            "Divorcios judiciales", 
+                            "Divorcios administrativos")) %>% 
+    filter(desc_entidad != "Estados Unidos Mexicanos")
 
-divormx <- datos %>% 
-  filter(indicador %in% c("Matrimonios", "Divorcios",
-                          "Relación divorcios - matrimonios", 
-                          "Divorcios judiciales", 
-                          "Divorcios administrativos")) %>% 
-  filter(desc_entidad == "Estados Unidos Mexicanos")
+  divormx <- divormx %>% 
+    select(-c("cve_entidad", "cve_municipio", "desc_municipio", 
+              "desc_entidad", "id_indicador"))
+  divormx <- divormx %>% 
+    select(-c("indicador", "unidad_medida", "X2020"))
 
-datos2 <- datos %>% 
-  filter(indicador %in% c("Matrimonios", "Divorcios",
-                          "Relación divorcios - matrimonios", 
-                          "Divorcios judiciales", 
-                          "Divorcios administrativos")) %>% 
-  filter(desc_entidad != "Estados Unidos Mexicanos")
+  divorcios <- datos2 %>% 
+    select(-c("cve_entidad", "cve_municipio", "id_indicador")) %>% 
+    filter(desc_municipio != "No especificado", indicador == "Divorcios") %>% 
+    filter(desc_municipio == "Estatal")
 
-divormx <- divormx %>% 
-  select(-c("cve_entidad", "cve_municipio", "desc_municipio", 
-            "desc_entidad", "id_indicador"))
-divormx <- divormx %>% 
-  select(-c("indicador", "unidad_medida", "X2020"))
+  matrimonios <- datos2 %>% 
+    select(-c("cve_entidad", "cve_municipio", "id_indicador")) %>% 
+    filter(desc_municipio != "No especificado", indicador == "Matrimonios") %>% 
+    filter(desc_municipio == "Estatal")
+  ```
+18. Se hacen modificaciones de tipo de dato y se agrupan divorcios y matrimonios por entidad.
+  ```R
+  divorcios_final <- divorcios %>% 
+    select(c("desc_entidad", "X2017", "X2018", "X2019")) %>% 
+    rename("Entidad" = desc_entidad) %>% 
+    mutate(X2017 = as.numeric(X2017), X2018 = as.numeric(X2018), X2019 = as.numeric(X2019)) %>% 
+    arrange(desc(X2019), desc(X2018), desc(X2017))  
 
-divorcios <- datos2 %>% 
-  select(-c("cve_entidad", "cve_municipio", "id_indicador")) %>% 
-  filter(desc_municipio != "No especificado", indicador == "Divorcios") %>% 
-  filter(desc_municipio == "Estatal")
+  matrimonios_final <- matrimonios %>% 
+    select(c("desc_entidad", "X2017", "X2018", "X2019")) %>% 
+    rename("Entidad" = desc_entidad) %>% 
+    mutate(X2017 = as.numeric(X2017), X2018 = as.numeric(X2018), X2019 = as.numeric(X2019)) %>% 
+    arrange(desc(X2019), desc(X2018), desc(X2017))
 
-matrimonios <- datos2 %>% 
-  select(-c("cve_entidad", "cve_municipio", "id_indicador")) %>% 
-  filter(desc_municipio != "No especificado", indicador == "Matrimonios") %>% 
-  filter(desc_municipio == "Estatal")
+  divorcios_mx <- data.frame(t(divormx))
+  colnames(divorcios_mx) <- c("Matrimonios",
+                              "Divorcios",
+                              "Relación_divorcios_matrimonios",
+                              "Divorcios_judiciales",
+                              "Divorcios_administrativos")
+  rownames(divorcios_mx) <- 1994:2019
+  divorcios_mx <- divorcios_mx %>% 
+    mutate(
+      Matrimonios = as.numeric(Matrimonios),
+      Divorcios= as.numeric(Divorcios),
+      Relación_divorcios_matrimonios = as.numeric(Relación_divorcios_matrimonios),
+      Divorcios_judiciales = as.numeric(Divorcios_judiciales),
+      Divorcios_administrativos = as.numeric(Divorcios_administrativos)
+    )
+  attach(divorcios_mx)
+  ```
+19. Se selecciona el modelo de regresión lineal simple y se grafica.
+  ```R
+  modelo1 <- lm(Divorcios~Matrimonios)
+  summary(modelo1)
 
-# Divorcios y matrimonios por entidad
+  plot(Matrimonios, Divorcios, pch = 16)
+  abline(lsfit(Matrimonios, Divorcios)) 
+  mtext(expression(paste('Regresión lineal estimada:',
+                         ' ',
+                         hat(y)[i] == 389300 - 0.5044*x[i] + e[i])),
+        side = 3, adj=1, font = 2)
+   ```   
+20. Se encuentran intervalos de confianza del 95% para el intercepto y la pendiente del modelo de regresión lineal simple.
 
-divorcios_final <- divorcios %>% 
-  select(c("desc_entidad", "X2017", "X2018", "X2019")) %>% 
-  rename("Entidad" = desc_entidad) %>% 
-  mutate(X2017 = as.numeric(X2017), X2018 = as.numeric(X2018), X2019 = as.numeric(X2019)) %>% 
-  arrange(desc(X2019), desc(X2018), desc(X2017))  
+  ```R
+  round(confint(modelo1, level = 0.95), 2)
 
-matrimonios_final <- matrimonios %>% 
-  select(c("desc_entidad", "X2017", "X2018", "X2019")) %>% 
-  rename("Entidad" = desc_entidad) %>% 
-  mutate(X2017 = as.numeric(X2017), X2018 = as.numeric(X2018), X2019 = as.numeric(X2019)) %>% 
-  arrange(desc(X2019), desc(X2018), desc(X2017))
+  conf <- predict(modelo1, interval = "confidence", level = 0.95)
+  pred <- predict(modelo1, interval = "prediction", level = 0.95)
 
+  lines(Matrimonios, pred[, 2], lty = 2, lwd = 2, col = "blue") # límites inferiores
+  lines(Matrimonios, pred[, 3], lty = 2, lwd = 2, col = "blue") # límites superiores
 
-divorcios_mx <- data.frame(t(divormx))
-colnames(divorcios_mx) <- c("Matrimonios",
-                            "Divorcios",
-                            "Relación_divorcios_matrimonios",
-                            "Divorcios_judiciales",
-                            "Divorcios_administrativos")
-rownames(divorcios_mx) <- 1994:2019
-divorcios_mx <- divorcios_mx %>% 
-  mutate(
-    Matrimonios = as.numeric(Matrimonios),
-    Divorcios= as.numeric(Divorcios),
-    Relación_divorcios_matrimonios = as.numeric(Relación_divorcios_matrimonios),
-    Divorcios_judiciales = as.numeric(Divorcios_judiciales),
-    Divorcios_administrativos = as.numeric(Divorcios_administrativos)
-  )
+  lines(Matrimonios, conf[, 2], lty = 2, lwd = 2, col = "green") # límites inferiores
+  lines(Matrimonios, conf[, 3], lty = 2, lwd = 2, col = "green") # límites superiores
+  ```
+21. Se obtiene la Probabilidad de divorcio.
+  ```R
+  modelo2 <- lm(Relación_divorcios_matrimonios~c(1994:2019))
+  summary(modelo2)
+  plot(1994:2019, Relación_divorcios_matrimonios, pch = 16, 
+       xlab = "Años", 
+       ylab = "Divorcios por cada 100 matrimonios")
+  abline(lsfit(1994:2019, Relación_divorcios_matrimonios)) 
+  mtext(expression(paste('Regresión lineal estimada:',
+                         ' ',
+                         hat(y)[i] == -1978.1085 + 0.9930*x[i] + e[i])),
+        side = 3, adj=1, font = 2)
+   ```
+22. Se encuentran intervalos de confianza del 95% para el intercepto y la pendiente del modelo de regresión lineal simple.
+  ```R
+  round(confint(modelo2, level = 0.95), 2)
 
+  conf2 <- predict(modelo2, interval = "confidence", level = 0.95)
+  pred2 <- predict(modelo2, interval = "prediction", level = 0.95)
 
-attach(divorcios_mx)
-modelo1 <- lm(Divorcios~Matrimonios)
-summary(modelo1)
+  lines(1994:2019, pred2[, 2], lty = 2, lwd = 2, col = "red") # límites inferiores
+  lines(1994:2019, pred2[, 3], lty = 2, lwd = 2, col = "red") # límites superiores
 
-plot(Matrimonios, Divorcios, pch = 16)
-abline(lsfit(Matrimonios, Divorcios)) 
-mtext(expression(paste('Regresión lineal estimada:',
-                       ' ',
-                       hat(y)[i] == 389300 - 0.5044*x[i] + e[i])),
-      side = 3, adj=1, font = 2)
-
-# Encontramos intervalos de confianza del 95% para el intercepto y la pendiente del modelo de regresión lineal simple
-round(confint(modelo1, level = 0.95), 2)
-
-conf <- predict(modelo1, interval = "confidence", level = 0.95)
-pred <- predict(modelo1, interval = "prediction", level = 0.95)
-
-lines(Matrimonios, pred[, 2], lty = 2, lwd = 2, col = "blue") # límites inferiores
-lines(Matrimonios, pred[, 3], lty = 2, lwd = 2, col = "blue") # límites superiores
-
-lines(Matrimonios, conf[, 2], lty = 2, lwd = 2, col = "green") # límites inferiores
-lines(Matrimonios, conf[, 3], lty = 2, lwd = 2, col = "green") # límites superiores
-
-
-
-# Probabilidad de divorcio
-
-modelo2 <- lm(Relación_divorcios_matrimonios~c(1994:2019))
-summary(modelo2)
-plot(1994:2019, Relación_divorcios_matrimonios, pch = 16, 
-     xlab = "Años", 
-     ylab = "Divorcios por cada 100 matrimonios")
-abline(lsfit(1994:2019, Relación_divorcios_matrimonios)) 
-mtext(expression(paste('Regresión lineal estimada:',
-                       ' ',
-                       hat(y)[i] == -1978.1085 + 0.9930*x[i] + e[i])),
-      side = 3, adj=1, font = 2)
-
-# Encontramos intervalos de confianza del 95% para el intercepto y la pendiente del modelo de regresión lineal simple
-round(confint(modelo2, level = 0.95), 2)
-
-conf2 <- predict(modelo2, interval = "confidence", level = 0.95)
-pred2 <- predict(modelo2, interval = "prediction", level = 0.95)
-
-lines(1994:2019, pred2[, 2], lty = 2, lwd = 2, col = "red") # límites inferiores
-lines(1994:2019, pred2[, 3], lty = 2, lwd = 2, col = "red") # límites superiores
-
-lines(1994:2019, conf2[, 2], lty = 2, lwd = 2, col = "green") # límites inferiores
-lines(1994:2019, conf2[, 3], lty = 2, lwd = 2, col = "green") # límites superiores
-
-## Divorcios judiciales
-
+  lines(1994:2019, conf2[, 2], lty = 2, lwd = 2, col = "green") # límites inferiores
+  lines(1994:2019, conf2[, 3], lty = 2, lwd = 2, col = "green") # límites superiores
+  ```
+23. Ahora los Divorcios judiciales
+```R
 modelo3 <- lm()
+```
 
 Utilizando este código, se creó un dashboard en Shiny, el cual muestra las gráficas obtenidas de una forma amigable para el usuario y que ayuda al análisis de la información. Este se puede consultar dentro de la carpeta `proyectoShinyWeb`, dentro de este mismo repositorio.
 
