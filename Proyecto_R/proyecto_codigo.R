@@ -10,7 +10,7 @@
   #Verificamos su estrucutura
   str(datos)
   
-  #Seleccionamos el senso donde unicamente se consideraron a los solteros
+  #Seleccionamos el censo donde unicamente se consideraron a los solteros
   solteros <- filter(datos, indicador == "Porcentaje de la población de 12 años y más soltera")
   
   #Limpiamos los datos de las columnas inecesarias
@@ -40,7 +40,7 @@ solteros_CDMX <- solteros[!(solteros$desc_entidad != 'Ciudad de México'),]
 solteros <- mutate(solteros,X2015 = as.numeric(X2015))
 solteros <- mutate(solteros,X2020 = as.numeric(X2020))
 
-#Al tener un NA en un valor de la columna 2015, utilizaremos la tasa de crecimiento con respecto al 2020 y 
+#Al tener un NA en un valor de la columna 2015, utilizaremos la tasa de crecimiento con respecto al 2020 
 media <- solteros %>% 
   filter(cve_municipio != 0) %>% 
   group_by(desc_entidad) %>% 
@@ -190,7 +190,6 @@ divorcios_mx <- divorcios_mx %>%
     Divorcios_administrativos = as.numeric(Divorcios_administrativos)
   )
 
-
 attach(divorcios_mx)
 modelo1 <- lm(Divorcios~Matrimonios)
 summary(modelo1)
@@ -213,8 +212,6 @@ lines(Matrimonios, pred[, 3], lty = 2, lwd = 2, col = "blue") # límites superio
 
 lines(Matrimonios, conf[, 2], lty = 2, lwd = 2, col = "green") # límites inferiores
 lines(Matrimonios, conf[, 3], lty = 2, lwd = 2, col = "green") # límites superiores
-
-
 
 # Probabilidad de divorcio
 
@@ -244,6 +241,3 @@ lines(1994:2019, conf2[, 3], lty = 2, lwd = 2, col = "green")
 ## Divorcios judiciales
 
 modelo3 <- lm()
-
-
-
