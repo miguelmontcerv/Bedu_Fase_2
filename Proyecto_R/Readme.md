@@ -315,7 +315,7 @@ Basándonos en las gráficas obtenidas podemos concluir que la hipótesis plante
 
 Los resultados de este trabajo se pusieron en una presentación, que se encuentra en este repositorio con el nombre: `Proyecto Bedu 2021.pdf`.
 
-EL video de este trabajo se encuentra en la siguiente dirección: https://youtu.be/LEMz9kvgiwU
+El video de este trabajo se encuentra en la siguiente dirección: https://youtu.be/LEMz9kvgiwU
 
 #### Trabajo posterior
 
