@@ -315,6 +315,8 @@ Basándonos en las gráficas obtenidas podemos concluir que la hipótesis plante
 
 Los resultados de este trabajo se pusieron en una presentación, que se encuentra en este repositorio con el nombre: `Proyecto Bedu 2021.pdf`.
 
+EL video de este trabajo se encuentra en la siguiente dirección: https://youtu.be/LEMz9kvgiwU
+
 #### Trabajo posterior
 
 En posteriores etapas de este proyecto se espera poder analizar más a fondo la búsqueda de pareja y las causas de divorcio para así procesar las variables demográficas que afectan estos fenómenos y poder dar un estimado de probabilidad de que alguna pareja se mantenga unida o se separe.
