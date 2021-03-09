@@ -13,7 +13,7 @@ En cada una de ellas se trabajó con un dataset diferente, a cada uno se le hizo
 
 Se espera que en el siguiente módulo se puedan realizar análisis con mayor profundidad y algunas predicciones de si una relación funcionará o no.
 
-Link de Youtube: 
+Link de Youtube: https://youtu.be/9lqrHD4DjJM
 
 - [Link para dataset de Okcupid.csv que se ocupó dentro del proyecto](https://drive.google.com/file/d/1G0SG1c-awt6w8ypbgSzaxzl-3RB9db8e/view?usp=sharing)
 
