@@ -1,18 +1,21 @@
-# Sesion 1. Introducción a R y Software
+# Proyecto final: La Ciencia de datos detrás del Desamor
 ## Data Science
 ### Fase 2
 
-**Objetivo**: Conocer las nociones básicas para poder manipular data sets, poder realizar lectura de datos y posteriormente realizar análisis exploratorios.
+**Objetivo**: Conocer las nociones básicas de Python para poder manipular data sets, poder realizar lectura de datos y realizar análisis exploratorios.
 
-### Postwork
-En este primer postwork tuvimos que aplicar muchos de los conceptos que vimos en clase, fue muy interesante trabajar con mis compañeros ya que se obtienen diferentes puntos de vista para resolver un mismo problema, para resolver esta primera tarea se realizaron los siguientes pasos:
-* Generamos un Data Frame cuyas columnas fueron la cantidad de goles de casa y la cantidad de goles visitantes de cada partido
-* Utilizando la función *with* calculamos una primera probabilidad para después graficarla 
-* Colocamos la cantidad mínima y máxima de goles tanto de visitantes como de locales
-* Aplicamos una función de reporte general 
+En este proyecto se desarrollaron 3 líneas de trabajo, con el fin de cubrir y resolver las dudas y necesidades de las personas que han lidiado con el Desamor:
+- El análisis de perfiles de aplicaciones de citas.
+- ¿Cómo conseguir una segunda cita en Speed dating?
+- ¿Por qué mi matrimonio no funcionó?
+
+En cada una de ellas se trabajó con un dataset diferente, a cada uno se le hizo su debida limpieza de datos y se buscó obtener datos de interés y utilidad para las personas que han sufrido de amor.
+
+Se espera que en el siguiente módulo se puedan realizar análisis con mayor profundidad y algunas predicciones de si una relación funcionará o no.
+
+Link de Youtube: 
 
 Alumnos 
 * Sofía Cristina Suárez Campos
-* David Garduño Guzmán
 * Andrea Noemi Aguilar Hidalgo
 * Miguel Angel Monteros Cervantes
