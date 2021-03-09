@@ -1,4 +1,4 @@
-# Proyecto final: La Ciencia de datos detrás del Desamor
+# Proyecto final: La Ciencia de Datos detrás del Desamor
 ## Data Science
 ### Fase 2
 
