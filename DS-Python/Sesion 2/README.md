@@ -7,3 +7,5 @@ Como se había mencionado en el postwork anterior, ya tenemos definido completam
 ### La ciencia de datos detrás del amor
 
 Considerando la información
+
+# Hacer postwork 2 y 4
