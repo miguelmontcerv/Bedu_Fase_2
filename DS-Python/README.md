@@ -1,5 +1,5 @@
 # Bedu x Santander
 ## Fase 2
-### Analisis de datos con R
+### Analisis de datos con Python 
 
-Estos son los programas que desarrollamos en la primer parte del curso de está *segunda fase* en la cual utilizamos el *lenguaje de programación R* y nos fue de gran ayuda ya que este es un lenguaje completamente orientado al analisis  de datos.
+- [Link para dataset de Okcupid.csv que se ocupó dentro del proyecto] (https://drive.google.com/file/d/1G0SG1c-awt6w8ypbgSzaxzl-3RB9db8e/view?usp=sharing)
